@@ -1,22 +1,23 @@
-%define		goffice	0.8.17
+%define		goffice	0.10.2
 %define		plugins	fn-derivatives dif excel fn-complex fn-database fn-date fn-eng fn-erlang fn-financial fn-info fn-logical fn-lookup fn-math fn-r fn-random fn-stat fn-string html mps fn-numtheory openoffice
 
 Summary:	Spreadsheet program
 Name:		gnumeric
-Version:	1.10.17
-Release:	2
+Version:	1.12.2
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gnumeric/1.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	aacc0899222c98fa9cdd85c49a6840be
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gnumeric/1.12/%{name}-%{version}.tar.xz
+# Source0-md5:	711daa98da0138203fb2f8dc4dcddb3c
+Patch0:		%{name}-am.patch
 URL:		http://www.gnome.org/projects/gnumeric/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+-devel
+BuildRequires:	gtk+3-devel
 BuildRequires:	intltool
 # api breakage, does not build
 #BuildRequires:	libgda-ui-devel
@@ -61,6 +62,9 @@ library.
 
 %prep
 %setup -q
+%patch0 -p1
+
+%{__sed} -i 's/schemas test/schemas/' Makefile.am
 
 %build
 %{__intltoolize}
@@ -95,9 +99,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*/*/plugins/*/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
 
-%find_lang %{name} --with-gnome --with-omf
-%find_lang %{name}-functions
-cat %{name}-functions.lang >> %{name}.lang
+%find_lang %{name}-%{version} --with-gnome --with-omf
+%find_lang %{name}-%{version}-functions
+cat %{name}-%{version}-functions.lang >> %{name}.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -151,9 +155,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnumeric/%{version}/plugins/mps/*.xml
 %{_libdir}/gnumeric/%{version}/plugins/openoffice/*.xml
 
-%dir %{_libdir}/goffice/%{goffice}/plugins/gnumeric
-%attr(755,root,root) %{_libdir}/goffice/%{goffice}/plugins/gnumeric/gnumeric.so
-%{_libdir}/goffice/%{goffice}/plugins/gnumeric/plugin.xml
+%dir %{_libdir}/goffice/*/plugins/gnumeric
+%attr(755,root,root) %{_libdir}/goffice/*/plugins/gnumeric/gnumeric.so
+%{_libdir}/goffice/*/plugins/gnumeric/plugin.xml
 
 %{_datadir}/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
@@ -173,7 +177,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gnumeric/%{version}/*.xml
 %{_datadir}/gnumeric/%{version}/autoformat-templates
 %{_datadir}/gnumeric/%{version}/templates
-%{_datadir}/gnumeric/%{version}/ui
 
 %files libs
 %defattr(644,root,root,755)
