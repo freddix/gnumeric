@@ -1,10 +1,10 @@
-%define		goffice	0.10.2
+%define		goffice	0.10
 %define		plugins	fn-derivatives dif excel fn-complex fn-database fn-date fn-eng fn-erlang fn-financial fn-info fn-logical fn-lookup fn-math fn-r fn-random fn-stat fn-string html mps fn-numtheory openoffice
 
 Summary:	Spreadsheet program
 Name:		gnumeric
 Version:	1.12.2
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		X11/Applications
@@ -155,9 +155,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnumeric/%{version}/plugins/mps/*.xml
 %{_libdir}/gnumeric/%{version}/plugins/openoffice/*.xml
 
-%dir %{_libdir}/goffice/*/plugins/gnumeric
-%attr(755,root,root) %{_libdir}/goffice/*/plugins/gnumeric/gnumeric.so
-%{_libdir}/goffice/*/plugins/gnumeric/plugin.xml
+%dir %{_libdir}/goffice/%{goffice}/plugins
+%dir %{_libdir}/goffice/%{goffice}/plugins/gnumeric
+%attr(755,root,root) %{_libdir}/goffice/%{goffice}/plugins/gnumeric/gnumeric.so
+%{_libdir}/goffice/%{goffice}/plugins/gnumeric/plugin.xml
 
 %{_datadir}/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
