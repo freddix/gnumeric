@@ -3,14 +3,13 @@
 
 Summary:	Spreadsheet program
 Name:		gnumeric
-Version:	1.12.2
-Release:	2
+Version:	1.12.3
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gnumeric/1.12/%{name}-%{version}.tar.xz
-# Source0-md5:	711daa98da0138203fb2f8dc4dcddb3c
-Patch0:		%{name}-am.patch
+# Source0-md5:	52d0637252930a5390adeb4e7ad27966
 URL:		http://www.gnome.org/projects/gnumeric/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,9 +61,6 @@ library.
 
 %prep
 %setup -q
-%patch0 -p1
-
-%{__sed} -i 's/schemas test/schemas/' Makefile.am
 
 %build
 %{__intltoolize}
@@ -93,15 +89,12 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	docdir=/usr/share/gnome/help/gnumeric/C
 
-rm -rf $RPM_BUILD_ROOT%{_includedir}
-rm -rf $RPM_BUILD_ROOT%{_pkgconfigdir}
-rm -f $RPM_BUILD_ROOT%{_libdir}/*/*/plugins/*/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}
+%{__rm} -r $RPM_BUILD_ROOT%{_pkgconfigdir}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*/*/plugins/*/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang %{name}-%{version} --with-gnome --with-omf
-%find_lang %{name}-%{version}-functions
-cat %{name}-%{version}-functions.lang >> %{name}.lang
+%find_lang %{name}-%{version} --with-gnome --with-omf --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -121,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /usr/sbin/ldconfig
 %postun	libs -p /usr/sbin/ldconfig
 
-%files -f %{name}.lang
+%files -f %{name}-%{version}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
 
