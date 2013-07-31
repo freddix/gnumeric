@@ -3,13 +3,13 @@
 
 Summary:	Spreadsheet program
 Name:		gnumeric
-Version:	1.12.3
+Version:	1.12.4
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gnumeric/1.12/%{name}-%{version}.tar.xz
-# Source0-md5:	52d0637252930a5390adeb4e7ad27966
+# Source0-md5:	0ec8e9902245fc099ca985ece80e48af
 URL:		http://www.gnome.org/projects/gnumeric/
 BuildRequires:	autoconf
 BuildRequires:	automake
